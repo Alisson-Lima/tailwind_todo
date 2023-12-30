@@ -12,9 +12,13 @@ const TasksTable = () => {
      className=" p-6 bg-gray-600 rounded-2xl flex flex-col gap-2"
     >
     {
-        tasks.map((item, i) => (
+        tasks.length > 0 ? (
+          tasks.map((item, i) => (
             <Task key={i} task={item}/>
         )).reverse()
+        ) : (
+          <h2 className="text-2xl text-gray-100 text-center">Nenhuma tarefa pendente. :P</h2>
+        )
     }
     </div>
   )

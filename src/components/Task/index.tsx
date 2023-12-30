@@ -12,6 +12,7 @@ const Task = ({task}: TaskProps) => {
   const {dispatch} = useTaskContext()
   const [isEdit, setIsEdit] = useState<boolean>(false)
   const [newTask, setNewtask] = useState<string>(task)
+  const [isCheck, setIsCheck] = useState<boolean>(false)
 
 
   const handleDeleteTask = () => {
@@ -24,6 +25,11 @@ const Task = ({task}: TaskProps) => {
   }
 
   const handleSaveTask = () =>{
+    if(newTask.trim() === ""){
+      console.log("Você não pode adicionar uma tarefa vazia")
+      setNewtask("Nova tarefa...")
+      return
+    }
     dispatch({type: "EDIT_TASK", payload: {oldTask: task, newTask: newTask}})
     setIsEdit(false)
   }
@@ -34,14 +40,26 @@ const Task = ({task}: TaskProps) => {
     >
 
       <label className="h-14 w-full items-center flex gap-4 cursor-pointer">
-        <input type="checkbox" className=" accent-purple bg-transparent border-2 border-red w-4 h-4 outline-none rounded-2xl relative block"/>
+        <input 
+          type="checkbox"
+          className=" accent-purple bg-transparent border-2 border-red w-4 h-4 outline-none rounded-2xl relative block"
+          onClick={()=>setIsCheck(!isCheck)}
+        />
         {
           !isEdit ? (
-            <p 
-            className="text-xl font-lato text-gray-100 font-medium"
-          >
-            {task}
-          </p>
+            !isCheck ? (
+              <p 
+              className="text-xl font-lato text-gray-100 font-medium"
+            > 
+              {task}
+            </p>
+            ) : (
+              <p 
+              className="text-xl font-lato font-medium text-gray-300 line-through"
+            > 
+              {task}
+            </p>
+            )
           ) : (
               <input 
                 type="text"
