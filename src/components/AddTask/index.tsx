@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useTaskContext } from '../../context/TaskContext'
 
 const AddTask = () => {
 
   const [task, setTask] = useState<string>("")
+  const {dispatch} = useTaskContext()
 
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -13,9 +15,8 @@ const AddTask = () => {
       return
     }
 
-    console.log(task)
     // Add task in tasks array...
-    // dispatch({type: "add_task", task})
+    dispatch({type: "ADD_TASK", payload: task})
 
     setTask("")
     
