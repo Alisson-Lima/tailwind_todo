@@ -9,7 +9,7 @@ const TasksTable = () => {
 
   return (
     <div
-     className=" p-6 bg-gray-600 rounded-2xl flex flex-col gap-2"
+     className=" p-4 md:p-6 bg-gray-600 rounded-2xl flex flex-col gap-2"
     >
     {
         tasks.length > 0 ? (
@@ -17,7 +17,7 @@ const TasksTable = () => {
             <Task key={i} task={item}/>
         )).reverse()
         ) : (
-          <h2 className="text-2xl text-gray-100 text-center">Nenhuma tarefa pendente. :P</h2>
+          <h2 className="text-lg font-medium md:text-2xl text-gray-100 text-center">Nenhuma tarefa pendente. :P</h2>
         )
     }
     </div>

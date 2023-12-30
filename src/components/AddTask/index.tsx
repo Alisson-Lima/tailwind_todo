@@ -1,38 +1,63 @@
-import React, { useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { useTaskContext } from '../../context/TaskContext'
+import { SistemMessageContext } from '../../context/SistemMessageContext'
 
 const AddTask = () => {
 
   const [task, setTask] = useState<string>("")
   const {dispatch} = useTaskContext()
-
+  const smContextValue = useContext(SistemMessageContext)
+  const inputTask = useRef<HTMLInputElement | null>(null)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
 
     if(task.trim() === ""){
-      console.log("Você não pode adicionar uma tarefa vazia")
+      smContextValue?.setSm({
+        type: "ERROR",
+        msg: "Você não pode adicionar uma tarefa vazia."
+      })
       return
     }
 
     // Add task in tasks array...
     dispatch({type: "ADD_TASK", payload: task})
+    smContextValue?.setSm({type: "",msg: ""})
 
+    if (inputTask.current) {
+      inputTask.current.focus();
+    }
     setTask("")
     
   }
 
+  const handleShowProgressGraphic = () =>{
+    console.log("open progress graphic...")
+  }
+
   return (
-    <div className="add_task bg-gray-600 text-gray-100 p-6 rounded-2xl">
-    <h2 className="mb-7 font-bold text-2xl font-lato">Digite sua tarefa</h2>
+    <div className="add_task bg-gray-600 text-gray-100 p-4 md:p-6 rounded-2xl">
+      <div className="wrapper flex flex-row gap-4 items-center justify-start mb-5">
+        <h2 className=" font-bold text-xl md:text-2xl font-lato ">Digite sua tarefa</h2>
+        <button
+          onClick={handleShowProgressGraphic}
+          className=' bg-gray-500 p-1.5 rounded-md hover:bg-gray-400 transition-colors'
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="11" viewBox="0 0 13 11" fill="none">
+            <path fillRule="evenodd" clipRule="evenodd" d="M0 1C0 0.447715 0.447715 0 1 0H2C2.55228 0 3 0.447715 3 1V10C3 10.5523 2.55228 11 2 11H1C0.447715 11 0 10.5523 0 10V1ZM5 3C5 2.44772 5.44772 2 6 2H7C7.55229 2 8 2.44772 8 3V10C8 10.5523 7.55228 11 7 11H6C5.44771 11 5 10.5523 5 10V3ZM11 5C10.4477 5 10 5.44772 10 6V10C10 10.5523 10.4477 11 11 11H12C12.5523 11 13 10.5523 13 10V6C13 5.44772 12.5523 5 12 5H11Z" fill="#3B4053"/>
+          </svg>
+        </button>
+      </div>
+    
     <form onSubmit={e => handleSubmit(e)} className=" gap-4 flex">
 
       <input
+        ref={inputTask}
         onChange={(e)=> setTask(e.target.value)} 
         value={task}
         type="text"
         placeholder="Sair com os pets..."
-        className=" max-w-[344px] w-full p-2 text-xl bg-transparent border-b-4 border-gray-400 placeholder:text-gray-300 outline-none focus:border-purple transition-colors"
+        className=" max-w-[344px] w-full p-2 text-lg md:text-xl bg-transparent border-b-4 border-gray-400 placeholder:text-gray-300 outline-none focus:border-purple transition-colors"
       />
       <button 
         className="min-w-12 min-h-12 rounded-lg flex items-center justify-center bg-purple hover:brightness-[1.1] transition-all duration-200"

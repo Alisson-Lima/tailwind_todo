@@ -37,12 +37,12 @@ export const TaskContextProvider: React.FC<TaskContextProviderProps> = ({ childr
   const initialTasks = ['Fazer academia', 'Lavar a louça', 'Estudar Tailwind'];
   const [tasks, dispatch] = useReducer(reducer, initialTasks);
 
-  const contextValue: TaskContextProps = {
+  const taskContextValue: TaskContextProps = {
     tasks,
     dispatch,
   };
 
-  return <TaskContext.Provider value={contextValue}>{children}</TaskContext.Provider>;
+  return <TaskContext.Provider value={taskContextValue}>{children}</TaskContext.Provider>;
 };
 
 export const useTaskContext = () => {
