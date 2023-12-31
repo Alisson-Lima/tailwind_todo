@@ -1,10 +1,5 @@
 import React, { Dispatch, ReactNode, SetStateAction, createContext, useState } from "react";
-
-
-type Sm = {
-    type: string,
-    msg: string
-}
+import { Sm } from "../types";
 
 type SistemMessageContextProps = {
     sm: Sm,

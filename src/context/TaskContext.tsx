@@ -1,30 +1,23 @@
 import React, { createContext, useContext, ReactNode, useReducer, Dispatch } from 'react';
 
-type ReducerAction =
-  | { type: 'ADD_TASK'; payload: string }
-  | { type: 'DELETE_TASK'; payload: string }
-  | { type: 'EDIT_TASK'; payload: { oldTask: string; newTask: string } };
+import { Task } from '../types';
+import { TaskContextReducerAction } from '../types';
 
-
-interface TaskContextProps {
-  tasks: string[];
-  dispatch: Dispatch<ReducerAction>;
+type TaskContextProps = {
+  tasks: Task[];
+  dispatch: Dispatch<TaskContextReducerAction>;
 }
 
 const TaskContext = createContext<TaskContextProps | undefined>(undefined);
 
-interface TaskContextProviderProps {
-  children: ReactNode;
-}
-
-const reducer = (state: string[], action: ReducerAction): string[] => {
+const reducer = (state: Task[], action: TaskContextReducerAction): Task[] => {
   switch (action.type) {
     case 'ADD_TASK':
       return [...state, action.payload];
     case 'DELETE_TASK':
-      return state.filter((task: string) => action.payload !== task);
+      return state.filter((task: Task) => action.payload.content !== task.content);
     case 'EDIT_TASK':
-      return state.map((task: string) =>
+      return state.map((task: Task) =>
         task === action.payload.oldTask ? action.payload.newTask : task
       );
     default:
@@ -32,9 +25,27 @@ const reducer = (state: string[], action: ReducerAction): string[] => {
   }
 };
 
+type TaskContextProviderProps = {
+  children: ReactNode;
+}
 
 export const TaskContextProvider: React.FC<TaskContextProviderProps> = ({ children }) => {
-  const initialTasks = ['Fazer academia', 'Lavar a louça', 'Estudar Tailwind'];
+
+  const initialTasks: Task[] = [
+    {
+      content: "Fazer academia",
+      status: false
+    },
+    {
+      content: "Lavar a louça",
+      status: false
+    },
+    {
+      content: "Estudar Tailwind",
+      status: true
+    },
+  ];
+
   const [tasks, dispatch] = useReducer(reducer, initialTasks);
 
   const taskContextValue: TaskContextProps = {

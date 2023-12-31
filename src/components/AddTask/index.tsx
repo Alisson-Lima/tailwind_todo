@@ -1,10 +1,11 @@
 import React, { useContext, useRef, useState } from 'react'
 import { useTaskContext } from '../../context/TaskContext'
 import { SistemMessageContext } from '../../context/SistemMessageContext'
+import { Task } from '../../types'
 
 const AddTask = () => {
 
-  const [task, setTask] = useState<string>("")
+  const [taskName, setTaskName] = useState<string>("")
   const {dispatch} = useTaskContext()
   const smContextValue = useContext(SistemMessageContext)
   const inputTask = useRef<HTMLInputElement | null>(null)
@@ -12,7 +13,7 @@ const AddTask = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
 
-    if(task.trim() === ""){
+    if(taskName.trim() === ""){
       smContextValue?.setSm({
         type: "ERROR",
         msg: "Você não pode adicionar uma tarefa vazia."
@@ -21,13 +22,20 @@ const AddTask = () => {
     }
 
     // Add task in tasks array...
+
+    const task: Task = {
+      content: taskName,
+      status: false
+    }
+
     dispatch({type: "ADD_TASK", payload: task})
     smContextValue?.setSm({type: "",msg: ""})
 
     if (inputTask.current) {
       inputTask.current.focus();
     }
-    setTask("")
+
+    setTaskName("")
     
   }
 
@@ -53,8 +61,8 @@ const AddTask = () => {
 
       <input
         ref={inputTask}
-        onChange={(e)=> setTask(e.target.value)} 
-        value={task}
+        onChange={(e)=> setTaskName(e.target.value)} 
+        value={taskName}
         type="text"
         placeholder="Sair com os pets..."
         className=" max-w-[344px] w-full p-2 text-lg md:text-xl bg-transparent border-b-4 border-gray-400 placeholder:text-gray-300 outline-none focus:border-purple transition-colors"

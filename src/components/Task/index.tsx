@@ -3,18 +3,26 @@
 import { useContext, useState } from "react"
 import { useTaskContext } from "../../context/TaskContext"
 import { SistemMessageContext } from "../../context/SistemMessageContext"
+import { Task as TypeTask } from "../../types"
 
 type TaskProps = {
-  task: string
+  task: TypeTask
 }
 
 const Task = ({task}: TaskProps) => {
 
   const {dispatch} = useTaskContext()
   const [isEdit, setIsEdit] = useState<boolean>(false)
-  const [newTask, setNewtask] = useState<string>(task)
-  const [isCheck, setIsCheck] = useState<boolean>(false)
+  const [newTask, setNewtask] = useState<TypeTask>(task)
+  const [isCheck, setIsCheck] = useState<boolean>(task.status)
   const smContextValue = useContext(SistemMessageContext)
+
+  const handleChangeStatus = () =>{
+    const updatedTask: TypeTask = {content: task.content, status: !isCheck}
+    dispatch({type: "EDIT_TASK", payload: {oldTask: task, newTask: updatedTask} })
+    setIsCheck(!isCheck)
+
+  }
 
 
   const handleDeleteTask = () => {
@@ -23,7 +31,7 @@ const Task = ({task}: TaskProps) => {
 
   const handleSaveTask = () =>{
 
-    if(newTask.trim() === ""){
+    if(newTask.content.trim() === ""){
       smContextValue?.setSm({
         type: "ERROR",
         msg: "Você não pode salvar uma tarefa vazia."
@@ -44,31 +52,32 @@ const Task = ({task}: TaskProps) => {
       <label className="h-14 w-full items-center flex gap-4 cursor-pointer">
         <input 
           type="checkbox"
-          className=" accent-purple bg-red w-4 h-4 outline-none rounded-2xl relative inline-block"
-          onClick={()=>setIsCheck(!isCheck)}
+          defaultChecked={isCheck}
+          className=" accent-purple w-4 h-4 outline-none rounded-2xl relative inline-block"
+          onChange={handleChangeStatus}
         />
         {
           !isEdit ? (
             !isCheck ? (
               <p 
-              className="text-md md:text-xl font-lato text-gray-100 font-medium"
+                className="text-md md:text-xl font-lato text-gray-100 font-medium"
             > 
-              {task}
+              {task.content}
             </p>
             ) : (
               <p 
-              className="text-md md:text-xl font-lato font-medium text-gray-300 line-through"
+                className="text-md md:text-xl font-lato font-medium text-gray-300 line-through"
             > 
-              {task}
+              {task.content}
             </p>
             )
           ) : (
               <input 
                 type="text"
                 className="bg-transparent w-full text-md md:text-xl outline-none text-gray-100 border-b-[1px] font-lato"
-                onChange={(e) => setNewtask(e.target.value)}
+                onChange={(e) => setNewtask({content: e.target.value, status: isCheck})}
                 autoFocus
-                value={newTask}
+                value={newTask.content}
               />
           )
         }
