@@ -1,4 +1,3 @@
-import { ReactNode, useState } from "react"
 import "./Bar.css"
 import { useTaskContext } from "../../context/TaskContext"
 
@@ -10,7 +9,6 @@ const Bar = ({value}: BarProps) =>{
 
     const {tasks} = useTaskContext()
     const doneTasks = tasks.filter(task => task.status)
-    const [complete, setComplete] = useState<boolean>(false)
 
     return(
         <>

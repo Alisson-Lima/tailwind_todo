@@ -1,6 +1,5 @@
 .progress {
     display:block;
-    -webkit-appearance: none;
     transition: 150ms;
 }
 .progress::-webkit-progress-bar {
