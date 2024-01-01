@@ -7,7 +7,7 @@ import { useToggleGraphic } from "../../context/ToggleGraphicContext"
 const ProgressGraphic = () => {
 
     const {tasks} = useTaskContext()
-    const [percentege, setPercentege] = useState<number>(0)
+    const [percentege, setPercentege] = useState<number | typeof NaN>(0)
     const doneTasks = tasks.filter(task => task.status)
     const {openGraphic} = useToggleGraphic()
 
@@ -15,8 +15,12 @@ const ProgressGraphic = () => {
 
         const total = tasks.length
         const done = tasks.filter(tasks => tasks.status === true).length
-        const percentegeDone = (done / total) * 100
-        setPercentege(parseFloat(percentegeDone.toFixed(0)))
+        if(!(total === 0 && done === 0)){
+            const percentegeDone = (done / total) * 100
+            setPercentege(parseFloat(percentegeDone.toFixed(0)))
+            return
+        }
+        setPercentege(0)
 
     }
 

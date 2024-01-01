@@ -18,7 +18,7 @@ const SistemMessage = () => {
     
         <div
           data-type={typeMessage}
-          className={`data-[type=ERROR]:bg-red data-[type=ALERT]:bg-yellow-300 data-[type=SUCCESS]:bg-green rounded-lg p-2 px-4 text-md font-semibold flex gap-4 justify-between w-72 transition-all ${message !== "" ? "opacity-1 scale-1" : "opacity-0 scale-75"} fixed top-12`}
+          className={`data-[type=ERROR]:bg-red data-[type=ALERT]:bg-yellow-300 data-[type=SUCCESS]:bg-green rounded-lg p-2 px-4 text-md font-semibold flex gap-4 justify-between w-72 transition-all ${message !== "" ? "opacity-1 scale-1" : "opacity-0 scale-75"} top-8 fixed md:top-12 z-10`}
         >
           <p
             className=" w-48 h-[50px]"
