@@ -3,10 +3,10 @@
 import { useContext, useState } from "react"
 import { useTaskContext } from "../../context/TaskContext"
 import { SistemMessageContext } from "../../context/SistemMessageContext"
-import { Task as TypeTask } from "../../types"
+import { Task as TaskType } from "../../types"
 
 type TaskProps = {
-  task: TypeTask,
+  task: TaskType,
   id: number
 }
 
@@ -14,12 +14,12 @@ const Task = ({task, id}: TaskProps) => {
 
   const {dispatch} = useTaskContext()
   const [isEdit, setIsEdit] = useState<boolean>(false)
-  const [newTask, setNewtask] = useState<TypeTask>(task)
+  const [newTask, setNewtask] = useState<TaskType>(task)
   const [isCheck, setIsCheck] = useState<boolean>(task.status)
   const smContextValue = useContext(SistemMessageContext)
 
   const handleChangeStatus = () =>{
-    const updatedTask: TypeTask = {content: task.content, status: !isCheck}
+    const updatedTask: TaskType = {content: task.content, status: !isCheck}
     dispatch({type: "EDIT_TASK", payload: {oldTask: task, newTask: updatedTask} })
     setIsCheck(!isCheck)
 
