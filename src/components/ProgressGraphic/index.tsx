@@ -2,12 +2,14 @@ import { useEffect, useState } from "react"
 import { useTaskContext } from "../../context/TaskContext"
 import Circle from "./Circle"
 import Bar from "./Bar"
+import { useToggleGraphic } from "../../context/ToggleGraphicContext"
 
 const ProgressGraphic = () => {
 
     const {tasks} = useTaskContext()
     const [percentege, setPercentege] = useState<number>(0)
     const doneTasks = tasks.filter(task => task.status)
+    const {openGraphic} = useToggleGraphic()
 
     const getPercentege = () =>{
 
@@ -27,7 +29,7 @@ const ProgressGraphic = () => {
     },[])  
 
     return (
-        <div className=" bg-gray-600 p-4 w-full lg:w-fit h-fit rounded-2xl lg:absolute lg:right-[-164px] lg:opacity-1 flex justify-center items-center">
+        <div className={`bg-gray-600 p-4 w-full relative lg:w-fit h-fit rounded-2xl lg:absolute lg:right-[-164px] flex justify-center items-center ${!openGraphic && "opacity-0 scale-90 lg:right-[-152px]"} transition-all`}>
             {
                 window.innerWidth > 1024 ? (
                     <Circle per={percentege}>

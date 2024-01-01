@@ -1,6 +1,6 @@
 // import React from 'react'
 
-import { useContext, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import { useTaskContext } from "../../context/TaskContext"
 import { SistemMessageContext } from "../../context/SistemMessageContext"
 import { Task as TaskType } from "../../types"
@@ -17,6 +17,7 @@ const Task = ({task, id}: TaskProps) => {
   const [newTask, setNewtask] = useState<TaskType>(task)
   const [isCheck, setIsCheck] = useState<boolean>(task.status)
   const smContextValue = useContext(SistemMessageContext)
+  const editInput = useRef<HTMLInputElement | null>(null)
 
   const handleChangeStatus = () =>{
     const updatedTask: TaskType = {content: task.content, status: !isCheck}
@@ -24,7 +25,6 @@ const Task = ({task, id}: TaskProps) => {
     setIsCheck(!isCheck)
 
   }
-
 
   const handleDeleteTask = () => {
     dispatch({type: "DELETE_TASK", payload: id})
@@ -37,8 +37,14 @@ const Task = ({task, id}: TaskProps) => {
         type: "ERROR",
         msg: "Você não pode salvar uma tarefa vazia."
       })
+
+      if(editInput.current){
+        editInput.current.focus()
+      }
+
       return
     }
+
 
     dispatch({type: "EDIT_TASK", payload: {oldTask: task, newTask: newTask}})
     smContextValue?.setSm({type: "",msg: ""})
@@ -75,10 +81,12 @@ const Task = ({task, id}: TaskProps) => {
           ) : (
               <input 
                 type="text"
-                className="bg-transparent w-full text-md md:text-xl outline-none text-gray-100 border-b-[1px] font-lato"
+                className="bg-transparent w-full h-full text-md  z-10 md:text-xl outline-none text-gray-100 font-lato placeholder:text-gray-300"
                 onChange={(e) => setNewtask({content: e.target.value, status: isCheck})}
                 autoFocus
+                ref={editInput}
                 value={newTask.content}
+                placeholder={`${task.content}...`}
               />
           )
         }

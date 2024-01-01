@@ -10,16 +10,19 @@ const SistemMessage = () => {
   const handleClose = ()=>{
     smContextValue?.setSm({type: "", msg: ""})
   }
-  
+
+  const typeMessage = smContextValue?.sm.type
+  const message = smContextValue?.sm.msg
 
   return (
     
-      smContextValue?.sm.type && (
         <div
-            data-type={smContextValue.sm.type}
-            className=" data-[type=ERROR]:bg-red data-[type=ALERT]:bg-yellow-300 data-[type=SUCCESS]:bg-green rounded-lg p-2 px-4 text-md font-semibold flex justify-between"
+          data-type={typeMessage}
+          className={`data-[type=ERROR]:bg-red data-[type=ALERT]:bg-yellow-300 data-[type=SUCCESS]:bg-green rounded-lg p-2 px-4 text-md font-semibold flex gap-4 justify-between w-72 transition-all ${message !== "" ? "opacity-1 scale-1" : "opacity-0 scale-75"} fixed top-12`}
         >
-          <p>{smContextValue.sm.msg}</p>
+          <p
+            className=" w-48 h-[50px]"
+          >{message}</p>
 
           <button
             className="p-1 group"
@@ -32,7 +35,7 @@ const SistemMessage = () => {
             </svg>
           </button>
         </div>
-      ) 
+      
     
   );
 }

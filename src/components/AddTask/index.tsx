@@ -2,6 +2,7 @@ import React, { useContext, useRef, useState } from 'react'
 import { useTaskContext } from '../../context/TaskContext'
 import { SistemMessageContext } from '../../context/SistemMessageContext'
 import { Task } from '../../types'
+import { useToggleGraphic } from '../../context/ToggleGraphicContext'
 
 const AddTask = () => {
 
@@ -9,6 +10,7 @@ const AddTask = () => {
   const {dispatch} = useTaskContext()
   const smContextValue = useContext(SistemMessageContext)
   const inputTask = useRef<HTMLInputElement | null>(null)
+  const {openGraphic, setOpenGraphic} = useToggleGraphic()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
@@ -40,9 +42,9 @@ const AddTask = () => {
   }
 
   const handleShowProgressGraphic = () =>{
-    console.log("open progress graphic...")
+    setOpenGraphic(!openGraphic)
   }
-
+  
   return (
     <div className="add_task bg-gray-600 text-gray-100 p-4 md:p-6 rounded-2xl">
       <div className="wrapper flex flex-row gap-4 items-center justify-start mb-5">
