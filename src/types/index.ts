@@ -11,5 +11,5 @@ export type Sm = {
 
 export type TaskContextReducerAction =
   | { type: 'ADD_TASK'; payload: Task }
-  | { type: 'DELETE_TASK'; payload: Task }
+  | { type: 'DELETE_TASK'; payload: number}
   | { type: 'EDIT_TASK'; payload: { oldTask: Task; newTask: Task } };

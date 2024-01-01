@@ -15,7 +15,7 @@ const reducer = (state: Task[], action: TaskContextReducerAction): Task[] => {
     case 'ADD_TASK':
       return [...state, action.payload];
     case 'DELETE_TASK':
-      return state.filter((task: Task) => action.payload.content !== task.content);
+      return state.filter((task: Task, id: number) => action.payload !== id);
     case 'EDIT_TASK':
       return state.map((task: Task) =>
         task === action.payload.oldTask ? action.payload.newTask : task

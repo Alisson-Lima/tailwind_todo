@@ -14,7 +14,7 @@ const TasksTable = () => {
     {
         tasks.length > 0 ? (
           tasks.map((item, i) => (
-            <Task key={i} task={item}/>
+            <Task key={i} task={item} id={i}/>
         )).reverse()
         ) : (
           <h2 className="text-lg font-medium md:text-2xl text-gray-100 text-center">Nenhuma tarefa pendente. :P</h2>

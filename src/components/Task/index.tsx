@@ -6,10 +6,11 @@ import { SistemMessageContext } from "../../context/SistemMessageContext"
 import { Task as TypeTask } from "../../types"
 
 type TaskProps = {
-  task: TypeTask
+  task: TypeTask,
+  id: number
 }
 
-const Task = ({task}: TaskProps) => {
+const Task = ({task, id}: TaskProps) => {
 
   const {dispatch} = useTaskContext()
   const [isEdit, setIsEdit] = useState<boolean>(false)
@@ -26,7 +27,7 @@ const Task = ({task}: TaskProps) => {
 
 
   const handleDeleteTask = () => {
-    dispatch({type: "DELETE_TASK", payload: task})
+    dispatch({type: "DELETE_TASK", payload: id})
   }
 
   const handleSaveTask = () =>{
