@@ -1,16 +1,21 @@
 .progress {
     display:block;
     transition: 150ms;
+    appearance: none;
+    border: none;
+    background: #242837;
 }
 .progress::-webkit-progress-bar {
-    background: transparent;
+    background: #242837;
     border-radius: 16px;
+    border: none;
     transition: 150ms;
 }
 .progress::-moz-progress-bar {  
-    background-color: transparent;
+    background-color: #242837;
     border-radius: 16px;
     transition: 150ms;
+    border: none;
 }
 
 .progress::-webkit-progress-value {
