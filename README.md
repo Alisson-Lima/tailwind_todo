@@ -1,6 +1,6 @@
 # Tailwind Todo
 
-<p style="line-height: 150%; font-size: 18px">This is a simple project called "tailwind-todo". The main goal of this project is to provide continuous practice of TypeScript skills, explore and apply utility classes from Tailwind CSS, and strengthen knowledge in React.</p>
+<p>This is a simple project called "tailwind-todo". The main goal of this project is to provide continuous practice of TypeScript skills, explore and apply utility classes from Tailwind CSS, and strengthen knowledge in React.</p>
 
 ## Project Objectives
 
