@@ -1,3 +1,5 @@
+![Thumbnail](./public/images/bg-todo-list.png)
+
 # Tailwind Todo
 
 <p>This is a simple project called "tailwind-todo". The main goal of this project is to provide continuous practice of TypeScript skills, explore and apply utility classes from Tailwind CSS, and strengthen knowledge in React.</p>
